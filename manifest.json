@@ -1,0 +1,14 @@
+{
+  "name": "منظم حياتي Premium",
+  "short_name": "منظم حياتي",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#080b12",
+  "theme_color": "#080b12",
+  "lang": "ar",
+  "dir": "rtl",
+  "description": "تطبيق شخصي للمهام والعادات والأهداف والملاحظات والتركيز",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

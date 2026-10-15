@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b12">
+<meta name="description" content="منظم حياتي Premium - مهام وعادات وأهداف وملاحظات وتركيز">
+<link rel="manifest" href="manifest.json">
+<title>منظم حياتي Premium</title>
+<style>
+:root{--bg:#080b12;--panel:#101622;--panel2:#151d2c;--text:#f5f7ff;--muted:#8994a8;--line:#263147;--p:#6c5ce7;--p2:#8e7cff;--green:#20d69b;--red:#ff5570}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0,#6c5ce722,transparent 30%),var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif;min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}.app{max-width:1200px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.logo{font-size:25px;font-weight:900}.logo span{color:var(--p2)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card{background:linear-gradient(145deg,#121a29ee,#0e1420ee);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 15px 50px #0007;margin-bottom:14px}.hero{padding:28px;border-radius:24px;background:radial-gradient(circle at 15% 20%,#8e7cff44,transparent 35%),linear-gradient(135deg,#171d35,#0d1421);border:1px solid #35405c;margin-bottom:14px}.hero h1{margin:0 0 8px}.stat{font-size:30px;font-weight:900;margin:8px 0}.progress,.xp{height:10px;background:#202a3b;border-radius:20px;overflow:hidden}.progress i,.xp i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--p2));transition:.4s}.xp i{background:linear-gradient(90deg,#ffc857,#ff8a00)}.btn{background:linear-gradient(135deg,var(--p),#4f46e5);color:#fff;padding:11px 15px;border-radius:12px}.secondary{background:var(--panel2);border:1px solid var(--line)}.danger{background:#4a1622;color:#ff9aaa}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.between{justify-content:space-between}input,textarea,select{width:100%;background:#0a101a;color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;outline:0;margin:5px 0}textarea{min-height:120px}.form{display:grid;grid-template-columns:2fr 1fr 1fr;gap:7px}.item{display:flex;align-items:center;gap:10px;padding:13px;background:#0d1420;border:1px solid var(--line);border-radius:14px;margin:8px 0}.item-main{flex:1}.done{opacity:.5;text-decoration:line-through}.tag{padding:5px 8px;border-radius:8px;background:#273047;font-size:12px}.high{background:#491824;color:#ff91a2}.med{background:#453b19;color:#ffd86b}.low{background:#12382f;color:#65e5ba}.page{display:none}.page.active{display:block}.nav{display:flex;gap:7px;overflow:auto;padding-bottom:10px;margin-bottom:12px}.nav button{white-space:nowrap;background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:10px 13px;border-radius:12px}.nav button.active{background:var(--p);color:white}.note{padding:15px;background:#111a29;border:1px solid var(--line);border-radius:14px;margin:8px 0;white-space:pre-wrap}.timer{text-align:center}.clock{font-size:70px;font-weight:900;margin:25px}.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.badge{text-align:center;padding:15px;border:1px solid var(--line);border-radius:14px;background:#0d1420}.badge b{font-size:30px}.empty{text-align:center;padding:25px;color:var(--muted)}#toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;background:#fff;color:#111;padding:12px 18px;border-radius:12px;transition:.2s;z-index:99}#toast.show{opacity:1;transform:translate(-50%,0)}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.form{grid-template-columns:1fr}.badges{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.grid{grid-template-columns:1fr}.app{padding:13px}.clock{font-size:55px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><div class="logo">🧠 منظم <span>حياتي</span></div><small id="date" class="muted"></small></div><button class="btn" onclick="quickTask()">＋ مهمة</button></header>
+<nav class="nav">
+<button class="active" data-p="home">🏠 الرئيسية</button><button data-p="tasks">✅ المهام</button><button data-p="habits">🔥 العادات</button><button data-p="goals">🎯 الأهداف</button><button data-p="notes">📝 الملاحظات</button><button data-p="money">💰 المصروفات</button><button data-p="study">📚 الدراسة</button><button data-p="timer">⏱️ التركيز</button><button data-p="achievements">🏆 الإنجازات</button><button data-p="settings">⚙️ الإعدادات</button>
+</nav>
+
+<section id="home" class="page active">
+<div class="hero"><h1 id="greet">أهلاً بك 👋</h1><p class="muted">كل يوم خطوة جديدة.</p><div class="row between"><b>إنجاز المهام</b><b id="pct">0%</b></div><div class="progress"><i id="bar"></i></div><br><button class="btn" onclick="smartPlan()">⚡ ماذا أفعل الآن؟</button></div>
+<div class="grid"><div class="card"><span class="muted">المهام</span><div class="stat" id="st">0</div></div><div class="card"><span class="muted">العادات</span><div class="stat" id="sh">0</div></div><div class="card"><span class="muted">الأهداف</span><div class="stat" id="sg">0</div></div><div class="card"><span class="muted">المصروفات</span><div class="stat" id="sm">0</div></div></div>
+<div class="grid2"><div class="card"><h3>⚡ المهام القادمة</h3><div id="homeTasks"></div></div><div class="card"><h3>🔥 عادات اليوم</h3><div id="homeHabits"></div></div></div>
+<div class="card"><div class="row between"><b>⭐ المستوى <span id="level">1</span></b><b id="xptext">0 / 100 XP</b></div><div class="xp"><i id="xpbar"></i></div></div>
+</section>
+
+<section id="tasks" class="page"><div class="card"><h2>✅ المهام</h2><div class="form"><input id="ti" placeholder="اسم المهمة"><select id="tp"><option value="low">عادي</option><option value="med">مهم</option><option value="high">عاجل</option></select><input id="tc" placeholder="التصنيف"></div><button class="btn" onclick="addTask()">إضافة</button><input id="ts" placeholder="🔎 بحث" oninput="renderTasks()"><div id="taskList"></div></div></section>
+
+<section id="habits" class="page"><div class="card"><h2>🔥 العادات</h2><div class="row"><input id="hi" placeholder="مثلاً: قراءة 20 دقيقة"><button class="btn" onclick="addHabit()">إضافة</button></div><div id="habitList"></div></div></section>
+
+<section id="goals" class="page"><div class="card"><h2>🎯 الأهداف</h2><div class="form"><input id="gi" placeholder="اسم الهدف"><input id="gt" type="number" min="1" placeholder="الهدف"><select id="gu"><option>خطوة</option><option>ساعة</option><option>صفحة</option><option>مرة</option></select></div><button class="btn" onclick="addGoal()">إضافة</button><div id="goalList"></div></div></section>
+
+<section id="notes" class="page"><div class="grid2"><div class="card"><h2>📝 ملاحظة</h2><input id="nt" placeholder="العنوان"><textarea id="nx" placeholder="اكتب هنا..."></textarea><button class="btn" onclick="addNote()">حفظ</button></div><div class="card"><h2>📌 ملاحظاتي</h2><input id="ns" placeholder="🔎 بحث" oninput="renderNotes()"><div id="noteList"></div></div></div></section>
+
+<section id="money" class="page"><div class="grid"><div class="card"><span class="muted">الإجمالي</span><div class="stat" id="moneyTotal">0</div></div><div class="card"><span class="muted">العمليات</span><div class="stat" id="moneyOps">0</div></div></div><div class="card"><h2>💰 إضافة مصروف</h2><div class="form"><input id="mn" placeholder="على ماذا صرفت؟"><input id="mv" type="number" step=".01" placeholder="المبلغ"><select id="mc"><option>طعام</option><option>مواصلات</option><option>دراسة</option><option>ترفيه</option><option>مشتريات</option><option>أخرى</option></select></div><button class="btn" onclick="addMoney()">إضافة</button><div id="moneyList"></div></div></section>
+
+<section id="study" class="page"><div class="grid"><div class="card"><span class="muted">ساعات الدراسة</span><div class="stat" id="hours">0</div></div><div class="card"><span class="muted">المواد</span><div class="stat" id="subjects">0</div></div></div><div class="card"><h2>📚 المواد</h2><div class="row"><input id="si" placeholder="اسم المادة"><button class="btn" onclick="addSubject()">إضافة</button></div><div id="subjectList"></div></div></section>
+
+<section id="timer" class="page"><div class="card timer"><h2>⏱️ مؤقت التركيز</h2><div class="clock" id="clock">25:00</div><button class="btn" onclick="startTimer()">ابدأ</button> <button class="btn secondary" onclick="pauseTimer()">إيقاف</button> <button class="btn secondary" onclick="resetTimer()">إعادة</button><p class="muted">25 دقيقة تركيز</p></div></section>
+
+<section id="achievements" class="page"><div class="card"><h2>🏆 الإنجازات</h2><div class="badges"><div class="badge"><b>🌱</b><br>البداية</div><div class="badge"><b>🔥</b><br>الاستمرار</div><div class="badge"><b>🎯</b><br>الهدف</div><div class="badge"><b>⭐</b><br>500 XP</div></div></div></section>
+
+<section id="settings" class="page"><div class="grid2"><div class="card"><h2>⚙️ الإعدادات</h2><button class="btn secondary" onclick="theme('#6c5ce7','#8e7cff')">🟣 بنفسجي</button> <button class="btn secondary" onclick="theme('#168cff','#42b8ff')">🔵 أزرق</button> <button class="btn secondary" onclick="theme('#00b894','#20d69b')">🟢 أخضر</button><br><br><button class="btn" onclick="exportData()">📤 تصدير نسخة</button><br><br><input type="file" accept=".json" onchange="importData(event)"></div><div class="card"><h2>⚠️ حذف البيانات</h2><button class="btn danger" onclick="clearData()">حذف كل شيء</button></div></div></section>
+</div>
+<div id="toast"></div>
+
+<script>
+const KEY="life_manager_pwa_v1";
+let d=JSON.parse(localStorage.getItem(KEY)||'{"tasks":[],"habits":[],"goals":[],"notes":[],"money":[],"subjects":[],"xp":0}');
+const $=id=>document.getElementById(id), save=()=>localStorage.setItem(KEY,JSON.stringify(d));
+const esc=s=>{let x=document.createElement("div");x.textContent=s;return x.innerHTML};
+function toast(s){let t=$("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function xp(n){d.xp+=n;save();render();toast("⭐ +"+n+" XP")}
+document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(b.dataset.p).classList.add("active");document.querySelectorAll("[data-p]").forEach(x=>x.classList.remove("active"));document.querySelectorAll(`[data-p="${b.dataset.p}"]`).forEach(x=>x.classList.add("active"))});
+
+function addTask(){let t=$("ti").value.trim();if(!t)return toast("اكتب المهمة");d.tasks.push({id:Date.now(),text:t,p:$("tp").value,c:$("tc").value.trim()||"عام",done:false});$("ti").value="";$("tc").value="";save();render();xp(10)}
+function toggleTask(id){let t=d.tasks.find(x=>x.id===id);t.done=!t.done;save();render();if(t.done)xp(15)}
+function delTask(id){d.tasks=d.tasks.filter(x=>x.id!==id);save();render()}
+function renderTasks(){let q=$("ts").value.toLowerCase();$("taskList").innerHTML=d.tasks.filter(t=>t.text.toLowerCase().includes(q)).map(t=>`<div class="item ${t.done?'done':''}"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${t.id})"><div class="item-main">${esc(t.text)}<br><small class="muted">${esc(t.c)}</small></div><span class="tag ${t.p}">${t.p==="high"?"عاجل":t.p==="med"?"مهم":"عادي"}</span><button class="btn danger" onclick="delTask(${t.id})">حذف</button></div>`).join("")||'<div class="empty">لا توجد مهام</div>'}
+
+function addHabit(){let t=$("hi").value.trim();if(!t)return;d.habits.push({id:Date.now(),text:t,count:0,last:""});$("hi").value="";save();render();xp(5)}
+function habit(id){let h=d.habits.find(x=>x.id===id),today=new Date().toDateString();if(h.last===today)return toast("أنجزتها اليوم 🔥");h.last=today;h.count++;save();render();xp(20)}
+function delHabit(id){d.habits=d.habits.filter(x=>x.id!==id);save();render()}
+function renderHabits(){let today=new Date().toDateString();$("habitList").innerHTML=d.habits.map(h=>`<div class="item"><div class="item-main">${esc(h.text)}<br><small class="muted">🔥 ${h.count}</small></div><button class="btn ${h.last===today?'secondary':''}" onclick="habit(${h.id})">${h.last===today?'✓ تم':'إنجاز'}</button><button class="btn danger" onclick="delHabit(${h.id})">حذف</button></div>`).join("")||'<div class="empty">أضف عادة</div>'}
+
+function addGoal(){let t=$("gi").value.trim(),target=+$("gt").value;if(!t||target<1)return toast("أدخل الهدف");d.goals.push({id:Date.now(),text:t,target,current:0,unit:$("gu").value});$("gi").value="";$("gt").value="";save();render();xp(10)}
+function goal(id){let g=d.goals.find(x=>x.id===id);if(g.current<g.target){g.current++;save();render();if(g.current===g.target)xp(100)}}
+function delGoal(id){d.goals=d.goals.filter(x=>x.id!==id);save();render()}
+function renderGoals(){$("goalList").innerHTML=d.goals.map(g=>{let p=Math.round(g.current/g.target*100);return`<div class="card"><div class="row between"><b>${esc(g.text)}</b><span>${g.current}/${g.target} ${g.unit}</span></div><div class="progress"><i style="width:${p}%"></i></div><br><button class="btn" onclick="goal(${g.id})">+ تقدم</button> <button class="btn danger" onclick="delGoal(${g.id})">حذف</button></div>`}).join("")||'<div class="empty">أضف هدفك الأول</div>'}
+
+function addNote(){let title=$("nt").value.trim()||"ملاحظة",text=$("nx").value.trim();if(!text)return toast("اكتب الملاحظة");d.notes.unshift({id:Date.now(),title,text});$("nt").value="";$("nx").value="";save();render();xp(5)}
+function delNote(id){d.notes=d.notes.filter(x=>x.id!==id);save();render()}
+function renderNotes(){let q=$("ns").value.toLowerCase();$("noteList").innerHTML=d.notes.filter(n=>(n.title+n.text).toLowerCase().includes(q)).map(n=>`<div class="note"><b>${esc(n.title)}</b><br><br>${esc(n.text)}<br><br><button class="btn danger" onclick="delNote(${n.id})">حذف</button></div>`).join("")||'<div class="empty">لا توجد ملاحظات</div>'}
+
+function addMoney(){let n=$("mn").value.trim(),v=+$("mv").value;if(!n||v<=0)return toast("أدخل البيانات");d.money.unshift({id:Date.now(),name:n,value:v,cat:$("mc").value});$("mn").value="";$("mv").value="";save();render();toast("💰 تمت الإضافة")}
+function delMoney(id){d.money=d.money.filter(x=>x.id!==id);save();render()}
+function renderMoney(){let total=d.money.reduce((a,x)=>a+x.value,0);$("moneyTotal").textContent=total.toFixed(2);$("moneyOps").textContent=d.money.length;$("moneyList").innerHTML=d.money.map(x=>`<div class="item"><div class="item-main">${esc(x.name)}<br><small class="muted">${x.cat}</small></div><b>${x.value.toFixed(2)}</b><button class="btn danger" onclick="delMoney(${x.id})">حذف</button></div>`).join("")}
+
+function addSubject(){let n=$("si").value.trim();if(!n)return;d.subjects.push({id:Date.now(),name:n,hours:0});$("si").value="";save();render()}
+function study(id){let s=d.subjects.find(x=>x.id===id);s.hours+=.5;save();render();xp(15)}
+function delSubject(id){d.subjects=d.subjects.filter(x=>x.id!==id);save();render()}
+function renderStudy(){$("subjects").textContent=d.subjects.length;$("hours").textContent=d.subjects.reduce((a,x)=>a+x.hours,0).toFixed(1);$("subjectList").innerHTML=d.subjects.map(s=>`<div class="item"><div class="item-main">📚 ${esc(s.name)}<br><small class="muted">${s.hours.toFixed(1)} ساعة</small></div><button class="btn" onclick="study(${s.id})">+30 دقيقة</button><button class="btn danger" onclick="delSubject(${s.id})">حذف</button></div>`).join("")}
+
+function render(){renderTasks();renderHabits();renderGoals();renderNotes();renderMoney();renderStudy();let total=d.tasks.length,done=d.tasks.filter(x=>x.done).length,p=total?Math.round(done/total*100):0;$("pct").textContent=p+"%";$("bar").style.width=p+"%";$("st").textContent=total;$("sh").textContent=d.habits.length;$("sg").textContent=d.goals.length;$("sm").textContent=d.money.reduce((a,x)=>a+x.value,0).toFixed(2);$("level").textContent=Math.floor(d.xp/100)+1;$("xptext").textContent=(d.xp%100)+" / 100 XP";$("xpbar").style.width=(d.xp%100)+"%";$("homeTasks").innerHTML=d.tasks.filter(x=>!x.done).slice(0,5).map(x=>`<div class="item"><div class="item-main">${esc(x.text)}</div></div>`).join("")||'<div class="empty">🎉 كل المهام منجزة</div>';let today=new Date().toDateString();$("homeHabits").innerHTML=d.habits.slice(0,5).map(h=>`<div class="item"><div class="item-main">${esc(h.text)}</div><button class="btn ${h.last===today?'secondary':''}" onclick="habit(${h.id})">${h.last===today?'✓':'إنجاز'}</button></div>`).join("")}
+function quickTask(){let t=prompt("اكتب المهمة:");if(!t)return;d.tasks.push({id:Date.now(),text:t,p:"med",c:"عام",done:false});save();render();xp(10)}
+function smartPlan(){let t=d.tasks.filter(x=>!x.done).sort((a,b)=>({high:0,med:1,low:2}[a.p]-{high:0,med:1,low:2}[b.p]))[0];alert(t?"⚡ مهمتك المقترحة الآن:\n\n"+t.text:"🎉 ما عندك مهام معلقة!")}
+function theme(a,b){document.documentElement.style.setProperty("--p",a);document.documentElement.style.setProperty("--p2",b);toast("🎨 تم تغيير الثيم")}
+function exportData(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:"application/json"}));a.download="life-manager-backup.json";a.click()}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{d=JSON.parse(r.result);save();render();toast("📥 تم الاسترجاع")}catch{toast("ملف غير صالح")}};r.readAsText(f)}
+function clearData(){if(confirm("حذف جميع البيانات؟")){localStorage.removeItem(KEY);location.reload()}}
+let sec=1500,int=null;function tick(){$("clock").textContent=String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")}function startTimer(){if(int)return;int=setInterval(()=>{if(sec<=0){pauseTimer();xp(30);toast("🎉 انتهت الجلسة");return}sec--;tick()},1000)}function pauseTimer(){clearInterval(int);int=null}function resetTimer(){pauseTimer();sec=1500;tick()}
+function date(){let n=new Date();$("date").textContent=n.toLocaleDateString("ar-BH",{weekday:"long",year:"numeric",month:"long",day:"numeric"});$("greet").textContent=n.getHours()<12?"صباح الخير ☀️":n.getHours()<18?"مساء الخير 🌤️":"مساء الخير 🌙"}
+render();tick();date();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("service-worker.js");
+</script>
+</body>
+</html>
